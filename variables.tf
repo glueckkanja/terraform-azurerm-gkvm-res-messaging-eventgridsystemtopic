@@ -9,10 +9,8 @@ variable "name" {
   description = "The name of the this resource."
 
   validation {
-    condition     = can(regex("TODO", var.name))
-    error_message = "The name must be TODO." # TODO remove the example below once complete:
-    #condition     = can(regex("^[a-z0-9]{5,50}$", var.name))
-    #error_message = "The name must be between 5 and 50 characters long and can only contain lowercase letters and numbers."
+    condition     = can(regex("^[a-zA-Z0-9-]{3,50}$", var.name))
+    error_message = "The name must be between 3 and 50 characters long and can only contain letters, numbers and dashes."
   }
 }
 
@@ -20,6 +18,62 @@ variable "name" {
 variable "resource_group_name" {
   type        = string
   description = "The resource group where the resources will be deployed."
+  nullable    = false
+}
+
+variable "topic_source" {
+  type        = string
+  description = "The source of the System Topic e.g. the resource ID of a Storage Account in case the topic listens to Storage Accounts. This is required for the resource to be created."
+  nullable    = false
+
+  validation {
+    condition     = can(regex("^/subscriptions/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/resourceGroups/[a-zA-Z0-9-_]+/providers/[a-zA-Z0-9._-]+/[a-zA-Z0-9._-]+/[a-zA-Z0-9._-]+$", var.topic_source))
+    error_message = "The source must be a valid Azure resource ID in the format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}."
+  }
+}
+
+variable "topic_type" {
+  type        = string
+  description = "Azure Service that the System Topic is associated with. This is required for the resource to be created."
+  nullable    = false
+
+  validation {
+    condition = contains(["Microsoft.Storage.StorageAccounts",
+      "Microsoft.Eventhub.Namespaces",
+      "Microsoft.Storage.StorageAccounts",
+      "Microsoft.Resources.Subscriptions",
+      "Microsoft.Resources.ResourceGroups",
+      "Microsoft.Devices.IoTHubs",
+      "Microsoft.EventGrid.Topics",
+      "Microsoft.ServiceBus.Namespaces",
+      "Microsoft.ContainerRegistry.Registries",
+      "Microsoft.Media.MediaServices",
+      "Microsoft.Maps.Accounts",
+      "Microsoft.EventGrid.Domains",
+      "Microsoft.AppConfiguration.ConfigurationStores",
+      "Microsoft.KeyVault.vaults",
+      "Microsoft.Web.Sites",
+      "Microsoft.Web.ServerFarms",
+      "Microsoft.SignalRService.SignalR",
+      "Microsoft.MachineLearningServices.Workspaces",
+      "Microsoft.Cache.Redis",
+      "Microsoft.Communication.CommunicationServices",
+      "Microsoft.PolicyInsights.PolicyStates",
+      "Microsoft.AgFoodPlatform.FarmBeats",
+      "Microsoft.ContainerService.ManagedClusters",
+      "Microsoft.ApiManagement.Service",
+      "Microsoft.HealthcareApis.Workspaces",
+      "Microsoft.ResourceNotifications.Resources",
+      "Microsoft.ResourceNotifications.HealthResources",
+      "Microsoft.DataBox.Jobs",
+      "Microsoft.EventGrid.Namespaces",
+      "Microsoft.Maintenance.MaintenanceConfigurations",
+      "Microsoft.ApiCenter.Services",
+      "Microsoft.ResourceNotifications.ContainerServiceEventResources",
+      "Microsoft.Edge.Contexts"],
+    var.topic_type)
+    error_message = "Only valid topic types such as 'Microsoft.Edge.Contexts' are allowed. Please refer to the documentation for a list of valid topic types: https://learn.microsoft.com/en-us/rest/api/eventgrid/controlplane/topic-types/list?view=rest-eventgrid-controlplane-2025-02-15&tabs=HTTP"
+  }
 }
 
 # required AVM interfaces
@@ -42,7 +96,7 @@ A map describing customer-managed keys to associate with the resource. This incl
 - `key_version` - (Optional) The version of the key. If not specified, the latest version is used.
 - `user_assigned_identity` - (Optional) An object representing a user-assigned identity with the following properties:
   - `resource_id` - The resource ID of the user-assigned identity.
-DESCRIPTION  
+DESCRIPTION
 }
 
 variable "diagnostic_settings" {
@@ -72,7 +126,7 @@ A map of diagnostic settings to create on the Key Vault. The map key is delibera
 - `event_hub_authorization_rule_resource_id` - (Optional) The resource ID of the event hub authorization rule to send logs and metrics to.
 - `event_hub_name` - (Optional) The name of the event hub. If none is specified, the default event hub will be selected.
 - `marketplace_partner_resource_id` - (Optional) The full ARM resource ID of the Marketplace resource to which you would like to send Diagnostic LogsLogs.
-DESCRIPTION  
+DESCRIPTION
   nullable    = false
 
   validation {
@@ -147,6 +201,7 @@ variable "private_endpoints" {
       condition                              = optional(string, null)
       condition_version                      = optional(string, null)
       delegated_managed_identity_resource_id = optional(string, null)
+      principal_type                         = optional(string, null)
     })), {})
     lock = optional(object({
       kind = string
@@ -209,6 +264,7 @@ variable "role_assignments" {
     condition                              = optional(string, null)
     condition_version                      = optional(string, null)
     delegated_managed_identity_resource_id = optional(string, null)
+    principal_type                         = optional(string, null)
   }))
   default     = {}
   description = <<DESCRIPTION
