@@ -1,14 +1,15 @@
 <!-- BEGIN_TF_DOCS -->
 # terraform-azurerm-avm-template
 
-This is a template repo for Terraform Azure Verified Modules.
+This is a glueckkanja Verified Module (GKVM) that implements the Azure Event Grid System Topic resource for terraform.
+It is supported by [glueckkanja AG](https://glueckkanja.com).
 
 <!-- markdownlint-disable MD033 -->
 ## Requirements
 
 The following requirements are needed by this module:
 
-- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 1.9, < 2.0)
+- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (~> 1.9, < 2.0)
 
 - <a name="requirement_azapi"></a> [azapi](#requirement\_azapi) (~> 2.0, < 3.0)
 
