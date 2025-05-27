@@ -57,7 +57,7 @@ resource "azurerm_resource_group" "this" {
 }
 
 resource "azurerm_storage_account" "test_storage_account" {
-  account_replication_type = "GRS"
+  account_replication_type = "ZRS"
   account_tier             = "Standard"
   location                 = azurerm_resource_group.this.location
   name                     = module.naming.storage_account.name_unique
