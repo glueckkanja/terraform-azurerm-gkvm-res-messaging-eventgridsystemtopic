@@ -5,10 +5,6 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 4.21"
     }
-    modtm = {
-      source  = "azure/modtm"
-      version = "~> 0.3"
-    }
     random = {
       source  = "hashicorp/random"
       version = "~> 3.5"
@@ -18,10 +14,6 @@ terraform {
 
 provider "azurerm" {
   features {}
-}
-
-provider "modtm" {
-  enabled = true
 }
 
 ## Section to provide a random Azure region for the resource group
@@ -68,5 +60,4 @@ module "test" {
   resource_group_name = azurerm_resource_group.this.name
   topic_source        = azurerm_storage_account.test_storage_account.id
   topic_type          = "Microsoft.Storage.StorageAccounts"
-  enable_telemetry    = false
 }

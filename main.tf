@@ -1,15 +1,15 @@
 resource "azapi_resource" "this" {
-  type = "Microsoft.EventGrid/systemTopics@2025-02-15"
+  location  = var.location
+  name      = var.name
+  parent_id = local.resource_group_id
+  type      = "Microsoft.EventGrid/systemTopics@2025-02-15"
   body = {
     properties = {
       "source" : var.topic_source,
       "topicType" : var.topic_type,
     }
   }
-  location  = var.location
-  name      = var.name
-  parent_id = local.resource_group_id
-  tags      = var.tags
+  tags = var.tags
 
   ## Resources supporting both SystemAssigned and UserAssigned
   dynamic "identity" {

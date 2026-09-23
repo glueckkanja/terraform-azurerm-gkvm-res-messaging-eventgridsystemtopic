@@ -1,5 +1,4 @@
-# Merged on top of https://raw.githubusercontent.com/Azure/tfmod-scaffold/main/avm.tflint_example.hcl
-# by avm_scripts/run-tflint.sh (hclmerge). Attributes here replace the upstream ones.
+# Merged over the gkvm-tools azure profile tflint.example.hcl (hclmerge).
 
 # Examples reference helper modules (Azure/avm-utl-regions, Azure/naming) with
 # pessimistic constraints (~> x.y) so they pick up patch releases. Allow ranges
