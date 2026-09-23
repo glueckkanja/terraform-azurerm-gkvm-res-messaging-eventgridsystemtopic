@@ -1,5 +1,5 @@
 <!-- BEGIN_TF_DOCS -->
-# terraform-azurerm-avm-template
+# terraform-azurerm-gkvm-res-messaging-eventgridsystemtopic
 
 This is a glueckkanja Verified Module (GKVM) that implements the Azure Event Grid System Topic resource for terraform.
 It is supported by [glueckkanja AG](https://glueckkanja.com).
@@ -30,11 +30,7 @@ The following resources are used by this module:
 - [azurerm_private_endpoint.this_unmanaged_dns_zone_groups](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint) (resource)
 - [azurerm_private_endpoint_application_security_group_association.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint_application_security_group_association) (resource)
 - [azurerm_role_assignment.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
-- [modtm_telemetry.telemetry](https://registry.terraform.io/providers/azure/modtm/latest/docs/resources/telemetry) (resource)
-- [random_uuid.telemetry](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) (resource)
 - [azapi_resource.rg](https://registry.terraform.io/providers/Azure/azapi/latest/docs/data-sources/resource) (data source)
-- [azurerm_client_config.telemetry](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
-- [modtm_module_source.telemetry](https://registry.terraform.io/providers/azure/modtm/latest/docs/data-sources/module_source) (data source)
 
 <!-- markdownlint-disable MD013 -->
 ## Required Inputs
@@ -135,13 +131,14 @@ Default: `{}`
 
 ### <a name="input_enable_telemetry"></a> [enable\_telemetry](#input\_enable\_telemetry)
 
-Description: This variable controls whether or not telemetry is enabled for the module.  
-For more information see <https://aka.ms/avm/telemetryinfo>.  
-If it is set to false, then no telemetry will be collected.
+Description: DEPRECATED, has no effect and will be removed in the next major version.  
+This module sends no telemetry; the Microsoft `modtm` telemetry inherited from  
+the AVM template was removed. The variable is kept for one major version so  
+existing callers do not break.
 
 Type: `bool`
 
-Default: `true`
+Default: `false`
 
 ### <a name="input_lock"></a> [lock](#input\_lock)
 
@@ -303,7 +300,7 @@ Description:   The ID of the Event Grid System Topic.
 No modules.
 
 <!-- markdownlint-disable-next-line MD041 -->
-## Data Collection
+## Telemetry
 
-The software may collect information about you and your use of the software and send it to Microsoft. Microsoft may use this information to provide services and improve our products and services. You may turn off the telemetry as described in the repository. There are also some features in the software that may enable you and Microsoft to collect data from users of your applications. If you use these features, you must comply with applicable law, including providing appropriate notices to users of your applications together with a copy of Microsoft’s privacy statement. Our privacy statement is located at <https://go.microsoft.com/fwlink/?LinkID=824704>. You can learn more about data collection and use in the help documentation and our privacy statement. Your use of the software operates as your consent to these practices.
+This module collects no telemetry and makes no network calls beyond the Azure APIs needed to manage the declared resources.
 <!-- END_TF_DOCS -->

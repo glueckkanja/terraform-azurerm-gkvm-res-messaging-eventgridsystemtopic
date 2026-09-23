@@ -9,10 +9,19 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 4.0, < 5.0"
     }
+    # DEPRECATED: no resources use modtm any more. It stays declared for one
+    # version so Terraform can still decode modtm_telemetry.telemetry from
+    # existing state while the removed block in main.deprecated.tf forgets it.
+    # Drop together with variable enable_telemetry in the next major version.
+    # tflint-ignore: terraform_unused_required_providers
     modtm = {
       source  = "azure/modtm"
       version = "~> 0.3, < 1.0"
     }
+    # DEPRECATED: only the removed telemetry used random. It stays declared for
+    # one version so Terraform can destroy random_uuid.telemetry from existing
+    # state. Drop in the next major version.
+    # tflint-ignore: terraform_unused_required_providers
     random = {
       source  = "hashicorp/random"
       version = "~> 3.5, < 4.0"
